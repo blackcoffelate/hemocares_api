@@ -27,7 +27,24 @@ const getReportAll = async (condition) => {
             foreignField: "GUID",
             as: "USER_DATA"
         }
-    }, ])
+    }, ]).sort({CREATED_AT: -1});
+};
+
+const getReportAllDetail = async (condition) => {
+    return model.aggregate([{
+        $match: {
+            $and: [
+                condition
+            ]
+        }
+    }, {
+        $lookup: {
+            from: "users",
+            localField: "GUID",
+            foreignField: "GUID",
+            as: "USER_DATA"
+        }
+    }, ]).sort({CREATED_AT: -1});
 };
 
 const updateOne = async (condition, body) => {
@@ -47,6 +64,7 @@ module.exports = {
     create,
     getById,
     getReportAll,
+    getReportAllDetail,
     updateOne,
     find
 };

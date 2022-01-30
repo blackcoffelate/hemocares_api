@@ -57,6 +57,17 @@ const getByStatus = async (req, res) => {
     res.json(response);
 }
 
+const getCountBloodType = async (req, res) => {
+    try {
+      const data = await service.getCountBloodType(req.body);
+      response = { ...data };
+    } catch (error) {
+      logger.error(error);
+      response = { ...requestResponse.server_error };
+    }
+    res.json(response);
+}
+
 const updateOne = async (req, res) => {
     try {
         const [fields] = await form.parseAsync(req);
@@ -95,6 +106,7 @@ module.exports = {
     getByStatusAll,
     getById,
     getByStatus,
+    getCountBloodType,
     updateOne,
     updateStatus
 };  

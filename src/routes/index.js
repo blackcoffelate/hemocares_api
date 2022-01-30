@@ -4,6 +4,7 @@ const authController = require("../controller/auth_controller");
 const { requestResponse } = require("../utils/index");
 const user = require("./user");
 const report = require("./report");
+const location = require("./location");
 
 let response;
 
@@ -23,5 +24,6 @@ router.post(
 
 router.use("/user", user);
 router.use("/report", report);
+router.use("/location", location);
 
 module.exports = router;

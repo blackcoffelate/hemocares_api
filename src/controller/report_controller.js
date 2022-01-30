@@ -55,6 +55,17 @@ const getReportAll = async (req, res) => {
     res.json(response);
 }
 
+const getReportAllDetail = async (req, res) => {
+    try {
+        const data = await service.getReportAllDetail({ GUID: req.params.guid });
+        response = { ...requestResponse.success, data };
+    } catch (error) {
+        logger.error(error);
+        response = { ...requestResponse.server_error };
+    }
+    res.json(response);
+}
+
 const updateOne = async (req, res) => {
     try {
         const [fields] = await form.parseAsync(req);
@@ -76,5 +87,6 @@ module.exports = {
     create,
     getById,
     getReportAll,
+    getReportAllDetail,
     updateOne
 };  

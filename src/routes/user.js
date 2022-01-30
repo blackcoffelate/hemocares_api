@@ -23,6 +23,11 @@ router.get(
     controller.getByStatus
 );
 
+router.get(
+    "/getCount",
+    controller.getCountBloodType
+);
+
 router.put(
     "/:guid",
     controller.updateOne

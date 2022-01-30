@@ -18,6 +18,11 @@ router.get(
     controller.getReportAll
 );
 
+router.get(
+    "/getReportAllDetail/:guid",
+    controller.getReportAllDetail
+);
+
 router.put(
     "/:guid",
     controller.updateOne

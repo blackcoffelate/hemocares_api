@@ -23,7 +23,21 @@ const create = async (data) => {
 };
 
 const getByStatusAll = async (condition) => {
-    return model.find(condition, { _id: false }, { lean: true }).sort({CREATED_AT: -1});
+    return model.aggregate([{
+        $match: {
+            $and: [
+                condition
+            ]
+        }
+    }, {
+        $lookup: {
+            from: "locations",
+            localField: "GUID",
+            foreignField: "GUID",
+            as: "USER_LOCATIONS"
+        }
+    }, ]).sort({CREATED_AT: -1});
+    // return model.find(condition, { _id: false }, { lean: true }).sort({CREATED_AT: -1});
 };
 
 const getByStatus = async (condition) => {
@@ -33,6 +47,27 @@ const getByStatus = async (condition) => {
 const getById = async (condition) => {
     return model.find(condition, { _id: false }, { lean: true });
 };
+
+const queryUserByBloodType = (condition) => model.aggregate([
+    { $match: condition }, {
+        $group: {
+            _id: "$BLOOD_TYPE",
+            count: {
+                $sum: 1
+            }
+        }
+    }
+]);
+
+const getCountBloodType = async (condition) => {
+    const user = await queryUserByBloodType(condition);
+    return {
+      ...requestResponse.success,
+      data: {
+        user
+      }
+    };
+  };
 
 const updateOne = async (condition, body) => {
     await model.updateOne(condition, body);
@@ -61,6 +96,8 @@ module.exports = {
     getByStatusAll,
     getById,
     getByStatus,
+    queryUserByBloodType,
+    getCountBloodType,
     updateOne,
     updateStatus,
     find

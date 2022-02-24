@@ -78,5 +78,5 @@ const UserSchema = new mongoose.Schema(
         versionKey: false,
         collection: collectionName
     });
-  
+
 module.exports = mongoose.model(collectionName, UserSchema);

@@ -14,6 +14,10 @@ const LocationSchema = new mongoose.Schema(
             type: String,
             default: "-"
         },
+        STATUS: {
+            type: String,
+            default: "-"
+        },
         CREATED_AT: {
             type: Date,
             default: new Date()
